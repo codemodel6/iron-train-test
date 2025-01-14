@@ -12,6 +12,6 @@ export const fetchInfinityData = async ({ pageParam = 1 }) => {
 
   return {
     data: response.data.data, // 서버에서 데이터
-    nextParam: pageParam + 1, // 다음 페이지지
+    nextParam: pageParam + 1, // 다음 페이지
   };
 };

@@ -1,12 +1,14 @@
 import React from "react";
-import InfinityTable from "../components/molcule/table/InfinityTable.tsx";
+
 import styles from "./InfinityPage.module.scss";
+import InfinityScroll from "./InfinityScroll.tsx";
+import InfinityTool from "./InfinityTool.tsx";
 
 const InfinityPage = () => {
   return (
     <div className={styles["infinity-wrapper"]}>
-      <h2>Infinity Table</h2>
-      <InfinityTable />
+      <InfinityScroll />
+      <InfinityTool />
     </div>
   );
 };

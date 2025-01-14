@@ -40,7 +40,7 @@ const InfinityTable = () => {
           fetchNextPage(); // 다음 페이지 요청
         }
       },
-      { threshold: 1.0 } // 요소가 100% 보여야 실행
+      { threshold: 0.9 } // 요소가 90% 보여야 실행
     );
 
     // 돔요소 관찰 시작
