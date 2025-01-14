@@ -1,0 +1,51 @@
+@import "../../../assets/global/globalDisplay.scss";
+@import "../../../assets/color/colorNote.scss";
+
+.infinity-table-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  height: 100%;
+
+  h2 {
+    @include centerColumn;
+    background-color: $Primary100;
+    width: 200px;
+    color: white;
+    border-radius: 10px;
+  }
+
+  .grid-table {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 2fr 3fr 2fr;
+    grid-template-rows: auto;
+    margin: 20px 0;
+  }
+
+  .grid-header {
+    display: contents;
+  }
+
+  .grid-header .grid-cell {
+    font-weight: bold;
+    background-color: $Primary100;
+  }
+
+  .grid-row {
+    display: contents;
+  }
+
+  .grid-row .grid-cell {
+    border-bottom: 1px solid $Gray000;
+  }
+
+  .grid-cell {
+    padding: 10px;
+    text-align: left;
+  }
+
+  input[type="checkbox"] {
+    transform: scale(1.2);
+  }
+}
