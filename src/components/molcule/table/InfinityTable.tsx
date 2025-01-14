@@ -76,12 +76,12 @@ const InfinityTable = () => {
             <div className={styles["grid-cell"]}>
               <input type="checkbox" />
             </div>
-            <div className={styles["grid-cell"]}>▶</div>
+            <div className={styles["grid-cell"]}>▶ {it.id}</div>
             <div className={styles["grid-cell"]}>선생님</div>
             <div className={styles["grid-cell"]}>
               {it.firstname} {it.lastname}
             </div>
-            <div className={styles["grid-cell"]}>test1</div>
+            <div className={styles["grid-cell"]}>{it.email}</div>
           </div>
         ))}
       </div>
