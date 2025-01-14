@@ -12,7 +12,6 @@ const InfinityTable = ({ tableDataArr }) => {
           <div className={styles["grid-cell"]}>조회</div>
           <div className={styles["grid-cell"]}>구분</div>
           <div className={styles["grid-cell"]}>이름</div>
-          <div className={styles["grid-cell"]}>담당 클래스</div>
           <div className={styles["grid-cell"]}>아이디</div>
         </div>
         {tableDataArr.map((it, idx) => (
@@ -23,7 +22,6 @@ const InfinityTable = ({ tableDataArr }) => {
             <div className={styles["grid-cell"]}>▶</div>
             <div className={styles["grid-cell"]}>선생님</div>
             <div className={styles["grid-cell"]}>박규범_선생님</div>
-            <div className={styles["grid-cell"]}></div>
             <div className={styles["grid-cell"]}>test1</div>
           </div>
         ))}
