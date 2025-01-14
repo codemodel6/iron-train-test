@@ -1,0 +1,17 @@
+@import "../../../assets/global/globalDisplay.scss";
+@import "../../../assets/color/colorNote.scss";
+
+.tooltip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: $Primary200;
+  font-size: $xxsmall;
+  color: black;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 5px;
+  white-space: normal;
+  z-index: 9999;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

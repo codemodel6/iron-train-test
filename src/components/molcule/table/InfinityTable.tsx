@@ -2,10 +2,12 @@ import React, { useRef, useEffect, useState } from "react";
 import styles from "./InfinityTable.module.scss";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchInfinityData } from "../../../module/api/fetchInfinityData.ts";
+import ToolTip from "../tooltip/ToolTip.tsx";
 
 const InfinityTable = () => {
   const loadDataRef = useRef(null); // 무한스크롤 dom 체크 ref
   const [expandedRows, setExpandedRows] = useState({}); // 서브 행 상태
+  const [mouseEnter, setMouseEnter] = useState(false); // 마우스 호버시 툴팁
 
   /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   - 함수 : 무한스크롤 useQuery
@@ -68,6 +70,13 @@ const InfinityTable = () => {
   // 모든 페이지 객체 데이터를 하나의 배열로 합친다
   const tableDataArr = data?.pages.flatMap((page) => page.data) || [];
 
+  const handleWordCount = (word) => {
+    if (word.length > 8) {
+      return word.slice(0, 8) + "..."; // 8글자까지만 자르고 뒤에 '...' 추가
+    } else {
+      return word; // 8글자 이하일 경우 그대로 반환
+    }
+  };
   return (
     <div className={styles["infinity-table-wrapper"]}>
       <div className={styles["grid-table"]}>
@@ -77,9 +86,10 @@ const InfinityTable = () => {
             <input type="checkbox" />
           </div>
           <div className={styles["grid-cell"]}>조회</div>
-          <div className={styles["grid-cell"]}>구분</div>
           <div className={styles["grid-cell"]}>이름</div>
-          <div className={styles["grid-cell"]}>아이디</div>
+          <div className={styles["grid-cell"]}>이메일</div>
+          <div className={styles["grid-cell"]}>전화번호</div>
+          <div className={styles["grid-cell"]}>성별</div>
         </div>
         {/* 테이블 데이터 */}
         {tableDataArr.map((it, idx) => (
@@ -111,15 +121,6 @@ const InfinityTable = () => {
                     : styles["grid-cell"]
                 }
               >
-                선생님
-              </div>
-              <div
-                className={
-                  expandedRows[it.id]
-                    ? styles["grid-cell-select"]
-                    : styles["grid-cell"]
-                }
-              >
                 {it.firstname} {it.lastname}
               </div>
               <div
@@ -131,17 +132,56 @@ const InfinityTable = () => {
               >
                 {it.email}
               </div>
+              <div
+                className={
+                  expandedRows[it.id]
+                    ? styles["grid-cell-select"]
+                    : styles["grid-cell"]
+                }
+              >
+                {it.phone}
+              </div>
+              <div
+                className={
+                  expandedRows[it.id]
+                    ? styles["grid-cell-select"]
+                    : styles["grid-cell"]
+                }
+              >
+                {it.gender}
+              </div>
             </div>
             {/* 서브 행 */}
-            {console.log("테이블 데이터 -> ", it)}
             {expandedRows[it.id] && (
-              <div className={styles["grid-row"]} key={it.address.id}>
+              <div className={styles["sub-row"]} key={it.address.id}>
                 <div className={styles["sub-cell"]}> </div>
                 <div className={styles["sub-cell"]}></div>
                 <div className={styles["sub-cell"]}>ㄴ</div>
+                <div className={styles["sub-cell"]}>상세주소</div>
                 <div className={styles["sub-cell"]}>{it.address.city}</div>
-                <div className={styles["sub-cell"]}>
-                  {it.address.streetName} {it.address.country}
+                <div
+                  className={styles["sub-tooltip-cell"]}
+                  onMouseEnter={() =>
+                    setMouseEnter((prev) => ({
+                      ...prev,
+                      [it.id]: true,
+                    }))
+                  }
+                  onMouseLeave={() =>
+                    setMouseEnter((prev) => ({
+                      ...prev,
+                      [it.id]: false,
+                    }))
+                  }
+                >
+                  {handleWordCount(
+                    `${it.address.streetName} ${it.address.country}`
+                  )}
+                  {mouseEnter[it.id] && (
+                    <ToolTip
+                      text={`${it.address.streetName} ${it.address.country}`}
+                    />
+                  )}
                 </div>
               </div>
             )}

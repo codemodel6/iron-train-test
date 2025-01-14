@@ -11,7 +11,7 @@
 
 .grid-table {
   display: grid;
-  grid-template-columns: 1fr 1fr 2fr 4fr 4fr;
+  grid-template-columns: 1fr 1fr 2fr 2fr 2fr 1fr;
   grid-template-rows: auto;
   background-color: white;
   margin-bottom: 20px;
@@ -57,11 +57,31 @@ input[type="checkbox"] {
   color: white;
 }
 
+.sub-row {
+  display: contents;
+  position: relative;
+}
+
 .sub-cell {
+  position: relative;
   padding: 10px;
   text-align: left;
   background-color: $Gray000;
   animation: slideDown 1s ease;
+  font-weight: bold;
+}
+
+.sub-tooltip-cell {
+  position: relative;
+  padding: 10px;
+  text-align: left;
+  background-color: $Gray000;
+  animation: slideDown 1s ease;
+  font-weight: bold;
+  // overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  z-index: 1;
 }
 
 @keyframes slideDown {
