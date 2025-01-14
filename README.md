@@ -35,7 +35,8 @@ npm instal
 처음에는 테이블을 구현하는줄 알고 테이블로 구현하였으나 grid UI라고 적혀있어 display:grid를 사용했습니다. map을 돌릴 때 key값을 표현하기 위해 display:contents 를 사용하여 틀을 만들고 그 내부에 그리드 항목들 할 cell들을 배치했습니다.
 
 ### - Infinite Scrol
-Infinite Scrol은 tanstack/react-query의 InfinityQuery를 사용해 해결했습니다. axios instance를 만든 후 상황에 맞는 api를 던져 문제를 해결하였습니다. 그리고 tanstack/react-query의 캐싱 기능을 이용해 따로 전역 상태 관리를 하지 않고도 이후 다른 컴포넌트에서 search, sort 작업을 진행할 수 있었습니다.
+Infinite Scrol은 tanstack/react-query의 InfinityQuery를 사용해 해결했습니다. axios instance를 만든 후 상황에 맞는 api를 던져 문제를 해결하였습니다. Infinite Scrol이 발생하는 시점은 테이블 가장 하단 특정 <div>를 만들어 observer를 통해 해당 dom에 90%접근했을 때 데이터를 다시 가져오도록 만들었습니다. 또한 
+그리고 tanstack/react-query의 캐싱 기능을 이용해 따로 전역 상태 관리를 하지 않고도 이후 다른 컴포넌트에서 search, sort 작업을 진행할 수 있었습니다.
 
 ### - search/sort
 api에서 처음 search를 진행할 때 파람에 다른 값이 넣어도 검색이 되지 않고 생일도 특정 날짜에서 오류가 나서 gender로만 search를 진행했습니다. 또한 sort는 이름으로 정렬해보았습니다. 무한스크롤이기때문에 상단에 컴포넌트를 만들어 언제든지 검색할 수 있게 제작하였습니다.
@@ -52,3 +53,4 @@ subRow 같은 경우 객체 state를 하나 만들어 map을 돌린 객채의 id
 ```
 으로 표시한 후 position : releative 와 position : absolute를 사용해 해결하려 했습니다. 하지만 여기서 문제가 발생했습니다.
 display: contents를 사용해서 해당 부모에 position : releative 를 줄 수 없어서 문제가 생겼고 이것을 해결하기위해 툴팁을 보여줄 div 태그에 releative를 주었으나 글자가 넘칠 때   overflow: hidden; 속성때문에 툴팁이 가려져서 나왔었습니다. 그래서 저는 문자가 길다면 ...으로 표시하는 방법을 자바스크립트 함수로 대체하여 해결하였습니다.
+
