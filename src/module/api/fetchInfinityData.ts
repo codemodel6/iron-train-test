@@ -1,14 +1,12 @@
-import axios from "axios";
+import axiosInstance from "../instance/axiosInstance.ts";
 
-const axiosInstance = axios.create({
-  baseURL: "https://fakerapi.it/api/v2",
-});
-
-export const fetchfetchInfinityData = async (count) => {
+export const fetchInfinityData = async (count) => {
   const response = await axiosInstance.get("/persons", {
     params: {
       _quantity: count,
+      _gender: "female",
+      _birthday_start: "2005-01-01",
     },
   });
-  return response.data; // 받아온 데이터 반환
+  return response.data;
 };
