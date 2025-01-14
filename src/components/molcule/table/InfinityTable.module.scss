@@ -7,41 +7,47 @@
   align-items: center;
   height: 550px;
   width: 100%;
+}
 
-  .grid-table {
-    display: grid;
-    grid-template-columns: 1fr 1fr 2fr 4fr 4fr;
-    grid-template-rows: auto;
-    background-color: white;
-    margin-bottom: 20px;
-    width: 80%;
-  }
+.grid-table {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 4fr 4fr;
+  grid-template-rows: auto;
+  background-color: white;
+  margin-bottom: 20px;
+  width: 90%;
+}
 
-  .grid-header {
-    display: contents;
-  }
+.grid-header {
+  display: contents;
+}
 
-  .grid-header .grid-cell {
-    font-weight: bold;
-    background-color: $Primary100;
-  }
+.grid-header .grid-cell {
+  font-weight: bold;
+  background-color: $Primary100;
+}
 
-  .grid-row {
-    display: contents;
-  }
+.grid-row {
+  display: contents;
+}
 
-  .grid-row .grid-cell {
-    border-bottom: 1px solid $Gray000;
-  }
+.grid-row .grid-cell {
+  border-bottom: 1px solid $Gray000;
+}
 
-  .grid-cell {
-    padding: 10px;
-    text-align: left;
-  }
+.grid-cell {
+  padding: 10px;
+  text-align: left;
+}
 
-  input[type="checkbox"] {
-    transform: scale(1.2);
-  }
+.grid-cell-select {
+  padding: 10px;
+  text-align: left;
+  background-color: $Primary200;
+}
+
+input[type="checkbox"] {
+  transform: scale(1.2);
 }
 
 .infinity-table-loading {
@@ -49,4 +55,22 @@
   width: 100%;
   background-color: $Primary100;
   color: white;
+}
+
+.sub-cell {
+  padding: 10px;
+  text-align: left;
+  background-color: $Gray000;
+  animation: slideDown 1s ease;
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

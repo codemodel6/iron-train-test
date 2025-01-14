@@ -1,10 +1,11 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import styles from "./InfinityTable.module.scss";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchInfinityData } from "../../../module/api/fetchInfinityData.ts";
 
 const InfinityTable = () => {
   const loadDataRef = useRef(null); // 무한스크롤 dom 체크 ref
+  const [expandedRows, setExpandedRows] = useState({}); // 서브 행 상태
 
   /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   - 함수 : 무한스크롤 useQuery
@@ -23,6 +24,16 @@ const InfinityTable = () => {
     initialPageParam: 1, // 초기 페이지 설정
     getNextPageParam: (serverData) => serverData.nextParam, // 다음 페이지
   });
+
+  /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  - 함수 : 서브 토글 여는 함수
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+  const toggleRow = (id) => {
+    setExpandedRows((prev) => ({
+      ...prev,
+      [id]: !prev[id], // 클릭한 행의 상태를 토글
+    }));
+  };
 
   /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   - 훅 : 가장 하단 접근 시 다음 데이터를 가져온다
@@ -72,17 +83,69 @@ const InfinityTable = () => {
         </div>
         {/* 테이블 데이터 */}
         {tableDataArr.map((it, idx) => (
-          <div className={styles["grid-row"]} key={it.id}>
-            <div className={styles["grid-cell"]}>
-              <input type="checkbox" />
+          <>
+            <div className={styles["grid-row"]} key={it.id}>
+              <div
+                className={
+                  expandedRows[it.id]
+                    ? styles["grid-cell-select"]
+                    : styles["grid-cell"]
+                }
+              >
+                <input type="checkbox" />
+              </div>
+              <div
+                onClick={() => toggleRow(it.id)}
+                className={
+                  expandedRows[it.id]
+                    ? styles["grid-cell-select"]
+                    : styles["grid-cell"]
+                }
+              >
+                {expandedRows[it.id] ? "▼" : "▶"}
+              </div>
+              <div
+                className={
+                  expandedRows[it.id]
+                    ? styles["grid-cell-select"]
+                    : styles["grid-cell"]
+                }
+              >
+                선생님
+              </div>
+              <div
+                className={
+                  expandedRows[it.id]
+                    ? styles["grid-cell-select"]
+                    : styles["grid-cell"]
+                }
+              >
+                {it.firstname} {it.lastname}
+              </div>
+              <div
+                className={
+                  expandedRows[it.id]
+                    ? styles["grid-cell-select"]
+                    : styles["grid-cell"]
+                }
+              >
+                {it.email}
+              </div>
             </div>
-            <div className={styles["grid-cell"]}>▶ {it.id}</div>
-            <div className={styles["grid-cell"]}>선생님</div>
-            <div className={styles["grid-cell"]}>
-              {it.firstname} {it.lastname}
-            </div>
-            <div className={styles["grid-cell"]}>{it.email}</div>
-          </div>
+            {/* 서브 행 */}
+            {console.log("테이블 데이터 -> ", it)}
+            {expandedRows[it.id] && (
+              <div className={styles["grid-row"]} key={it.address.id}>
+                <div className={styles["sub-cell"]}> </div>
+                <div className={styles["sub-cell"]}></div>
+                <div className={styles["sub-cell"]}>ㄴ</div>
+                <div className={styles["sub-cell"]}>{it.address.city}</div>
+                <div className={styles["sub-cell"]}>
+                  {it.address.streetName} {it.address.country}
+                </div>
+              </div>
+            )}
+          </>
         ))}
       </div>
       {/* 테이블 끝 */}
