@@ -1,6 +1,6 @@
 ## 실행 방법
 1. git clone https://github.com/codemodel6/iron-train-test.git 명령어를 통해 local vsocode에 프로젝트를 클론받아주세요.
-2. vscode의 명령어 터미널에 npm install 명령어를 통해 package.json에 있는 패키지들을 다운 받아 주세요.
+2. vscode의 명령어 터미널에 cd iron-train-test 로 클론받은 폴더로 들어간 후 npm install 명령어를 통해 package.json에 있는 패키지들을 다운 받아 주세요.
 3. npm run start를 통해 프로젝트를 실행해주세요
 
 ## 실행 환경
