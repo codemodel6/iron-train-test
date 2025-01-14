@@ -24,7 +24,7 @@ npm instal
 처음에는 테이블을 구현하는줄 알고 테이블로 구현하였으나 grid UI라고 적혀있어 display:grid를 사용했습니다. map을 돌릴 때 key값을 표현하기 위해 display:contents 를 사용하여 틀을 만들고 그 내부에 그리드 항목들 할 cell들을 배치했습니다.
 
 ### - Infinite Scrol
-Infinite Scrol은 tanstack/react-query의 InfinityQuery를 사용해 해결했습니다. axios instance를 만든 후 상황에 맞는 api를 던져 문제를 해결하였습니다. Infinite Scrol이 발생하는 시점은 테이블 가장 하단 특정 <div>를 만들어 observer를 통해 해당 dom에 90%접근했을 때 데이터를 다시 가져오도록 만들었습니다. 또한 
+Infinite Scrol은 tanstack/react-query의 InfinityQuery를 사용해 해결했습니다. axios instance를 만든 후 상황에 맞는 api를 던져 문제를 해결하였습니다. Infinite Scrol이 발생하는 시점은 테이블 가장 하단 특정 <div>를 만들어 observer를 통해 해당 dom에 90%접근했을 때 데이터를 다시 가져오도록 만들었습니다.
 그리고 tanstack/react-query의 캐싱 기능을 이용해 따로 전역 상태 관리를 하지 않고도 이후 다른 컴포넌트에서 search, sort 작업을 진행할 수 있었습니다.
 
 ### - search/sort
@@ -45,5 +45,5 @@ display: contents를 사용해서 해당 부모에 position : releative 를 줄 
 
 ## 아쉬운점
 1. 일정이 있어 테스트를 조금 늦게 시작해 총 8시간정도 작업했는데 시간이 부족해 타입스크립트 설정을 디테일하게 하지 못한 것 같아 아쉽습니다.
-2. 무한스크롤 작업에 data를 하나의 배열로 바꾸는 작업을 진행했는데 id가 겹쳐 sub-cell을 나오게 할 때 id값이 겹쳐 선택하지 하는 cell도 나오는 부분을 놓친것이 아쉽습니다.
+2. 무한스크롤 작업에 data를 하나의 배열로 바꾸는 작업을 진행했는데 id가 겹쳐 sub-cell을 나오게 할 때 선택하지 하는 cell도 나오는 부분을 놓친것이 아쉽습니다.
 3. tooltip에서 특정 툴팁이 cell에 가려지는 오류가 있는데 해결하지 못한게 아쉽습니다.
