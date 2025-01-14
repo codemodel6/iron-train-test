@@ -1,9 +1,14 @@
+import {
+  FetchDataResponse,
+  FetchInfinityDataParams,
+  FetchInfinityDataResponse,
+} from "../../components/interface/table.ts";
 import axiosInstance from "../instance/axiosInstance.ts";
 
 export const fetchInfinityData = async ({
   pageParam = 1,
   gender = "femail",
-}) => {
+}: FetchInfinityDataParams): Promise<FetchInfinityDataResponse> => {
   const response = await axiosInstance.get("/persons", {
     params: {
       _quantity: 15, // 한 페이지당 항목 수

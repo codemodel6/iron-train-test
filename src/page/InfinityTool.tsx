@@ -1,27 +1,41 @@
 import React, { useState } from "react";
 import styles from "./InfinityTool.module.scss";
-import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  InfiniteData,
+  useInfiniteQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { fetchInfinityData } from "../module/api/fetchInfinityData.ts";
+import {
+  FetchDataResponse,
+  FetchInfinityDataParams,
+  FetchInfinityDataResponse,
+} from "../components/interface/table.ts";
+
+enum SortOrder {
+  ASC = "asc",
+  DESC = "desc",
+}
 
 const InfinityTool = () => {
-  const [searchKeyword, setSearchKeyword] = useState(""); // 검색어
-  const [sortOrder, setSortOrder] = useState(""); // 정렬 순서 상태
+  const [searchKeyword, setSearchKeyword] = useState<string>(""); // 검색어
+  const [sortOrder, setSortOrder] = useState<string>(""); // 정렬 순서 상태
   const queryClient = useQueryClient();
 
   /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   - 함수 : 이름 정렬 함수수
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
-  const handleSort = (order) => {
-    console.log(order);
+  const handleSort = (order: SortOrder): void => {
     const sortedData = [
       ...(data?.pages.flatMap((page) => page.data) || []),
     ].sort((a, b) => {
-      if (sortOrder === "desc") return a.firstname.localeCompare(b.firstname);
+      if (order === SortOrder.DESC)
+        return a.firstname.localeCompare(b.firstname);
       else return b.firstname.localeCompare(a.firstname);
     });
 
     // 캐시 업데이트
-    queryClient.setQueryData(["infinityData"], (oldData) => ({
+    queryClient.setQueryData(["infinityData"], (oldData: any) => ({
       ...oldData,
       pages: [{ data: sortedData }],
     }));
@@ -33,9 +47,9 @@ const InfinityTool = () => {
   - 함수 : 리액트 쿼리의 캐싱된 값을 가져온다
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } =
-    useInfiniteQuery({
+    useInfiniteQuery<InfiniteData<FetchDataResponse>, Error>({
       queryKey: ["infinityData"], // 검색어 포함
-      queryFn: ({ pageParam = 1 }) =>
+      queryFn: ({ pageParam = 1 }: FetchInfinityDataParams) =>
         fetchInfinityData({ pageParam, gender: searchKeyword }), // 검색어 전달
       initialPageParam: 1, // 초기 페이지 설정
       getNextPageParam: (serverData) => serverData.nextParam, // 다음 페이지

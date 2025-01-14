@@ -1,13 +1,23 @@
 import React, { useRef, useEffect, useState } from "react";
 import styles from "./InfinityTable.module.scss";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 import { fetchInfinityData } from "../../../module/api/fetchInfinityData.ts";
 import ToolTip from "../tooltip/ToolTip.tsx";
+import { FetchDataResponse } from "../../interface/table.ts";
+
+// 상태 타입 정의
+interface ExpandedRows {
+  [key: string]: boolean;
+}
+
+interface MouseEnterState {
+  [key: string]: boolean;
+}
 
 const InfinityTable = () => {
-  const loadDataRef = useRef(null); // 무한스크롤 dom 체크 ref
-  const [expandedRows, setExpandedRows] = useState({}); // 서브 행 상태
-  const [mouseEnter, setMouseEnter] = useState(false); // 마우스 호버시 툴팁
+  const loadDataRef = useRef<HTMLDivElement | null>(null); // 무한스크롤 dom 체크 ref
+  const [expandedRows, setExpandedRows] = useState<ExpandedRows>({}); // 서브 행 상태
+  const [mouseEnter, setMouseEnter] = useState<MouseEnterState>(false); // 마우스 호버시 툴팁
 
   /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   - 함수 : 무한스크롤 useQuery
@@ -20,7 +30,7 @@ const InfinityTable = () => {
     isFetching,
     isFetchingNextPage,
     status,
-  } = useInfiniteQuery({
+  } = useInfiniteQuery<InfiniteData<FetchDataResponse>, Error>({
     queryKey: ["infinityData"],
     queryFn: fetchInfinityData,
     initialPageParam: 1, // 초기 페이지 설정
@@ -30,7 +40,7 @@ const InfinityTable = () => {
   /** - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   - 함수 : 서브 토글 여는 함수
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
-  const toggleRow = (id) => {
+  const toggleRow = (id: string) => {
     setExpandedRows((prev) => ({
       ...prev,
       [id]: !prev[id], // 클릭한 행의 상태를 토글
